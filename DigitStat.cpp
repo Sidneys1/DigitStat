@@ -20,7 +20,13 @@ int main(int argc, char* argv[]) {
 	ofstream outFile;
 	ifstream inFile;
 	LinkedNode *head;
-	int integers = 0, fractions = 0;
+	//creating linked list struct
+  struct LinkedNOde{
+    int next;
+    int prev;
+    double actualValue;
+  }
+  int integers = 0, fractions = 0;
 	int firstDigCount[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 	
 	if (argc != 3) { // Check argument count...
