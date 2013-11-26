@@ -4,7 +4,6 @@
 
 #include <iostream>
 #include <fstream>
-#include <cstring>
 #include <string>
 #include <sstream>
 #include <algorithm>
@@ -20,9 +19,9 @@ int main(int argc, char* argv[]) {
 	// Variables...
 	ofstream outFile;
 	ifstream inFile;
-	LinkedNode *head;
+	LinkedNode *head = nullptr;
 	//creating linked list struct
-  int integers = 0, fractions = 0;
+	int integers = 0, fractions = 0;
 	int firstDigCount[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 	
 	if (argc != 3) { // Check argument count...
@@ -42,19 +41,24 @@ int main(int argc, char* argv[]) {
 	// So now our input and output files are initialized, we need to read the numbers in one by one and insert them into a doubly linked list.
 	for (string line; getline(inFile, line); ) {
 		// Convert the string into a stringstream
-    istringstream ss(line);
+ 	 	istringstream ss(line);
 		// And read it into a double. Exit with a bad format if we can't read a double.
+		
 		double val;
 		if (!(ss >> val))
 			return ERROR_BAD_FORMAT;
 
 		// Now we create a new LinkedNode to store our value...
 		LinkedNode *temp = new LinkedNode;
-		temp->value = &line;
+		temp->value = line;
 		temp->actualValue = val;
+		temp->prev = nullptr;
+		temp->next = nullptr;
+
+		cout << "line: " << line << "\ndouble: " << val << endl;
 
 		//Counting first digit occurrences.
-		firstDigCount[(int)line.at(0)]++;
+		firstDigCount[(int)line.at(0)] += 1;
 		//Checking whether or not the value is a fraction or an integer
 		if(val == (int)val)
 			integers++;
@@ -66,7 +70,7 @@ int main(int argc, char* argv[]) {
 		// Since string is a templated collection of chars, this works.
 		for (unsigned char b = 0; b < 10; b++) { // Iterate 0-9
 			temp->digitCounts[b] = count(line.begin(), line.end(), (b + 30));
-      }
+      		}
 
 		// Now we need to insert this in the current array. In a sorted fashion, mind you.
 		if (head == nullptr) // CASE: list is empty.
@@ -96,19 +100,14 @@ int main(int argc, char* argv[]) {
 		}
 	}
 
-	/******   TODO:   ******/
-	// Output what we have so far to the file.
-	// Prompt console for input
-	// We're almost done!
-
-
 	/* Start of file output */
 
 	//Printing ordered list to the outfile.
 	LinkedNode* holder = head;
 	while(holder != nullptr) {
-
-		outFile << holder->value << "\n";
+		
+		cout << (holder->value) << endl;
+		outFile << (holder->value) << "\n";
 
 		//Need to specify C++11 for compiling
 		outFile << "[0-9]: ";
@@ -134,7 +133,10 @@ int main(int argc, char* argv[]) {
 	outFile << "\n";
 
 	outFile.close();
-
+	cout << "Finished print" << endl;
 	/*End of file output*/
+
+	//Cealnup
+	//cleanUp(head);
 
 }
