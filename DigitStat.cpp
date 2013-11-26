@@ -20,7 +20,6 @@ int main(int argc, char* argv[]) {
 	ofstream outFile;
 	ifstream inFile;
 	LinkedNode *head = nullptr;
-	//creating linked list struct
 	int integers = 0, fractions = 0;
 	int firstDigCount[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 	
@@ -55,22 +54,22 @@ int main(int argc, char* argv[]) {
 		temp->prev = nullptr;
 		temp->next = nullptr;
 
-		cout << "line: " << line << "\ndouble: " << val << endl;
-
 		//Counting first digit occurrences.
-		firstDigCount[(int)line.at(0)] += 1;
+		firstDigCount[((int)line[0] - 48)]++;
+
 		//Checking whether or not the value is a fraction or an integer
-		if(val == (int)val)
+		if(val == (long long)val)
 			integers++;
 		else 
 			fractions++;
+
 		// And we set up the DigitCounts struct.
 		// Note: b + 30 is converting byte b into a char with a value of '0', '1', etc
 		// "count" is from the algorithms import, and operates on templated collections.
 		// Since string is a templated collection of chars, this works.
 		for (unsigned char b = 0; b < 10; b++) { // Iterate 0-9
-			temp->digitCounts[b] = count(line.begin(), line.end(), (b + 30));
-      		}
+			temp->digitCounts[b] = count(line.begin(), line.end(), (char)(b + 48));
+     		}
 
 		// Now we need to insert this in the current array. In a sorted fashion, mind you.
 		if (head == nullptr) // CASE: list is empty.
@@ -101,20 +100,18 @@ int main(int argc, char* argv[]) {
 	}
 
 	/* Start of file output */
-
+	
 	//Printing ordered list to the outfile.
 	LinkedNode* holder = head;
 	while(holder != nullptr) {
 		
-		cout << (holder->value) << endl;
-		outFile << (holder->value) << "\n";
+		outFile << holder->value << "\n";
 
 		//Need to specify C++11 for compiling
 		outFile << "[0-9]: ";
-		for(int &x : holder->digitCounts) 
-			outFile << x << ", ";
-
-		outFile << "\n";
+		for(int k = 0; k < 9; k++)
+			outFile << holder->digitCounts[k] << ", ";
+		outFile << holder->digitCounts[9] << "\n";
 
 		holder = holder->next;
 	}
@@ -127,17 +124,45 @@ int main(int argc, char* argv[]) {
 
 	//Printing first digit occurrence distrivbution.
 	outFile << "Distribution of first digit [0-9]: \n";
-	for(int &x : firstDigCount)
-		outFile << x << ", ";
-
-	outFile << "\n";
+	for(int j = 0; j < 9; j++)
+		outFile << firstDigCount[j] << ", ";
+	outFile << firstDigCount[9] << "\n";
 
 	outFile.close();
-	cout << "Finished print" << endl;
 	/*End of file output*/
 
-	//Cealnup
-	//cleanUp(head);
+	//Calling the menu function
+	menu();
 
+	//Cleanup
+	LinkedNode* node = head;
+	while(node != nullptr) {
+		if(node->next == nullptr) {
+			delete node;
+			node = nullptr;
+		} else {
+			node = node->next;
+			delete node->prev;
+		}
+	}
+}
+
+void menu() {
+	cout << "Entering menu, type 'q' to quit.\n" << endl;
+	string input;
+
+	do {
+		cout << "Input a set of digits: " << endl;
+		cin >> input;
+
+		//Checking for quit.
+		if(input.compare("q") == 0 || input.compare("Q") == 0) {
+			break;
+		}
+
+		//Then here we can call your function or algorithm. 
+		//I don't know if we need to check the input, we probably should.
+
+	} while(true);
 }
 
