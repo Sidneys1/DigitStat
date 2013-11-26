@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <cstring>
 #include <string>
 #include <sstream>
 #include <algorithm>
@@ -21,11 +22,6 @@ int main(int argc, char* argv[]) {
 	ifstream inFile;
 	LinkedNode *head;
 	//creating linked list struct
-  struct LinkedNOde{
-    int next;
-    int prev;
-    double actualValue;
-  }
   int integers = 0, fractions = 0;
 	int firstDigCount[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 	
@@ -46,7 +42,7 @@ int main(int argc, char* argv[]) {
 	// So now our input and output files are initialized, we need to read the numbers in one by one and insert them into a doubly linked list.
 	for (string line; getline(inFile, line); ) {
 		// Convert the string into a stringstream
-		istringstream ss(line);
+    istringstream ss(line);
 		// And read it into a double. Exit with a bad format if we can't read a double.
 		double val;
 		if (!(ss >> val))
@@ -59,20 +55,18 @@ int main(int argc, char* argv[]) {
 
 		//Counting first digit occurrences.
 		firstDigCount[(int)line.at(0)]++;
-
 		//Checking whether or not the value is a fraction or an integer
 		if(val == (int)val)
 			integers++;
 		else 
 			fractions++;
-
 		// And we set up the DigitCounts struct.
 		// Note: b + 30 is converting byte b into a char with a value of '0', '1', etc
 		// "count" is from the algorithms import, and operates on templated collections.
 		// Since string is a templated collection of chars, this works.
-		for (byte b = 0; b < 10; b++) { // Iterate 0-9
+		for (unsigned char b = 0; b < 10; b++) { // Iterate 0-9
 			temp->digitCounts[b] = count(line.begin(), line.end(), (b + 30));
-		}
+      }
 
 		// Now we need to insert this in the current array. In a sorted fashion, mind you.
 		if (head == nullptr) // CASE: list is empty.
@@ -81,7 +75,7 @@ int main(int argc, char* argv[]) {
 
 			// Determine the node we need to insert before.
 			LinkedNode *before = head;
-			while (*before->actualValue < val && before->next != nullptr)
+			while (before->actualValue < val && before->next != nullptr)
 				before = before->next;
 
 			if (before->actualValue < val && before->next == nullptr) { // CASE: insert on tail
@@ -119,7 +113,7 @@ int main(int argc, char* argv[]) {
 		//Need to specify C++11 for compiling
 		outFile << "[0-9]: ";
 		for(int &x : holder->digitCounts) 
-			outFile << *x << ", ";
+			outFile << x << ", ";
 
 		outFile << "\n";
 
@@ -135,7 +129,7 @@ int main(int argc, char* argv[]) {
 	//Printing first digit occurrence distrivbution.
 	outFile << "Distribution of first digit [0-9]: \n";
 	for(int &x : firstDigCount)
-		outFile << *x << ", ";
+		outFile << x << ", ";
 
 	outFile << "\n";
 

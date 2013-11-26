@@ -1,5 +1,5 @@
 C	=	g++
-A	=	-g -Wall -std=c++0x
+A	=	-g -Wextra -Wall -std=c++0x
 O	=	DigitStat
 
 all: DigitStat.o
