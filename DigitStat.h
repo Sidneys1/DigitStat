@@ -5,3 +5,5 @@ typedef struct LinkedNode {
 	std::string value;
 	int digitCounts[10];
 } LinkedNode;
+
+void menu();
