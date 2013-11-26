@@ -163,9 +163,8 @@ void menu(LinkedNode* head) {
 
 		//Then here we can call your function or algorithm. 
 		//I don't know if we need to check the input, we probably should.
-  		cout<<head->value<<endl;
       int total=0;
-  		LinkedNode* holder=head;
+      LinkedNode* holder=head;
   		std::vector<int> mylist;
     //  int t;
     //  istringstream three(input);
@@ -174,18 +173,23 @@ void menu(LinkedNode* head) {
 	//	if (!(three >> fiVal))
 		//	return ERROR_BAD_FORMAT;
     int t=0;
-      while(input[t]){
-      if (isdigit(input[t])){
-    			for(int j=0; j<input.length(); j++){
-      				mylist.push_back((int) input[t]);
-    		      cout<<input[t];
-          }
+    //  while(input[t]){
+    //  if (isdigit(input[t])){
+    /*			for(int j=0; j<input.length(); j++){
+      				mylist.push_back(stoi(input[t]));
+              cout<<stoi(input[t]);
+           }
   		}
   		else{
     		cout<<"not a number";
-  		}
-    t++;
-   }
+  		}*/
+      mylist.reserve(input.size());
+      std::transform(std::begin(input), std::end(input), 
+std::back_inserter(mylist), [](char c){
+          return c-'0';
+        });
+  //  t++;
+  // }
     
   		LinkedNode* holder2=head;
   		int nuTotal;
@@ -193,7 +197,6 @@ void menu(LinkedNode* head) {
     		for(unsigned int u=0; u<mylist.size(); u++){
      			for(int z=0; z<9; z++){
         			//holder2->digitCounts[z];
-       				cout<<mylist[u]<<endl; 
                if(mylist[u]==z){
                   //nuTotal+=holder2->digitCounts[z];  
         	        nuTotal+=holder2->digitCounts[z];
