@@ -204,14 +204,14 @@ std::back_inserter(mylist), [](char c){
                      //nuTotal+=holder2->digitCounts[z];  
         	        nuTotal+=holder2->digitCounts[z];
                   
-              cout<<"number of instances of "<< mylist[u]<<" for actual value "<< holder2->actualValue<<" is "<< holder2->digitCounts[z]<<endl;
-            cout<<"nuTotal is "<<nuTotal<<endl;
+      //        cout<<"number of instances of "<< mylist[u]<<" for actual value "<< holder2->actualValue<<" is "<< holder2->digitCounts[z]<<endl;
+        //    cout<<"nuTotal is "<<nuTotal<<endl;
             }
           
        
     if(nuTotal>total){
       total=nuTotal;
-      cout<<"total for"<< holder2->actualValue<<" is "<<total<<endl;
+    //  cout<<"total for"<< holder2->actualValue<<" is "<<total<<endl;
       }}}
     holder2=holder2->next;
   }
