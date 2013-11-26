@@ -192,21 +192,27 @@ std::back_inserter(mylist), [](char c){
   // }
     
   		LinkedNode* holder2=head;
-  		int nuTotal;
+  //		int nuTotal=0;
   		while(holder2!=nullptr){
-    		for(unsigned int u=0; u<mylist.size(); u++){
-     			for(int z=0; z<9; z++){
+    		  int nuTotal=0;
+          for(unsigned int u=0; u<mylist.size(); u++){
+     			  //int nuTotal=0;
+            for(int z=0; z<10; z++){
         			//holder2->digitCounts[z];
+              //int nuTotal=0;
                if(mylist[u]==z){
-                  //nuTotal+=holder2->digitCounts[z];  
+                     //nuTotal+=holder2->digitCounts[z];  
         	        nuTotal+=holder2->digitCounts[z];
-                  //cout<<holder2->digitCounts[z]<<endl;
+                  
+              cout<<"number of instances of "<< mylist[u]<<" for actual value "<< holder2->actualValue<<" is "<< holder2->digitCounts[z]<<endl;
+            cout<<"nuTotal is "<<nuTotal<<endl;
             }
-     }     
-       }
+          
+       
     if(nuTotal>total){
       total=nuTotal;
-    }
+      cout<<"total for"<< holder2->actualValue<<" is "<<total<<endl;
+      }}}
     holder2=holder2->next;
   }
   std::list<string> digiStatNum;
@@ -216,7 +222,7 @@ std::back_inserter(mylist), [](char c){
   while(holder3 != nullptr){
       int nunuTotal=0;
       for(int u=0; u<mylist.size(); u++){
-        for(int z=0; z<9; z++){
+        for(int z=0; z<10; z++){
          if(mylist[u]==z){
             nunuTotal+=holder3->digitCounts[z];
           }
