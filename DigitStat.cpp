@@ -131,15 +131,19 @@ int main(int argc, char* argv[]) {
 	outFile.close();
 	/*End of file output*/
 
+	//Calling the menu function
 	menu();
 
 	//Cleanup
-	LinkedNode* prior = head;
-	LinkedNode* lead = head;
-	while(lead->next != nullptr) {
-		lead = lead->next;
-		delete prior;
-		prior = lead;
+	LinkedNode* node = head;
+	while(node != nullptr) {
+		if(node->next == nullptr) {
+			delete node;
+			node = nullptr;
+		} else {
+			node = node->next;
+			delete node->prev;
+		}
 	}
 }
 
@@ -151,7 +155,7 @@ void menu() {
 		cout << "Input a set of digits: " << endl;
 		cin >> input;
 
-		//Checking input
+		//Checking for quit.
 		if(input.compare("q") == 0 || input.compare("Q") == 0) {
 			break;
 		}
