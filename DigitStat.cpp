@@ -7,6 +7,7 @@
 #include <string>
 #include <sstream>
 #include <algorithm>
+#include <vector>
 #include "DigitStat.h"
 #include <list>
 #include <locale>
@@ -161,84 +162,34 @@ void menu(LinkedNode* head) {
 			break;
 		}
 
-		//Then here we can call your function or algorithm. 
-		//I don't know if we need to check the input, we probably should.
-      int total=0;
-      LinkedNode* holder=head;
-  		std::vector<int> mylist;
-    //  int t;
-    //  istringstream three(input);
-  //		int fiVal;
-      
-	//	if (!(three >> fiVal))
-		//	return ERROR_BAD_FORMAT;
-    int t=0;
-    //  while(input[t]){
-    //  if (isdigit(input[t])){
-    /*			for(int j=0; j<input.length(); j++){
-      				mylist.push_back(stoi(input[t]));
-              cout<<stoi(input[t]);
-           }
-  		}
-  		else{
-    		cout<<"not a number";
-  		}*/
-      mylist.reserve(input.size());
-      std::transform(std::begin(input), std::end(input), 
-std::back_inserter(mylist), [](char c){
-          return c-'0';
-        });
-  //  t++;
-  // }
-    
-  		LinkedNode* holder2=head;
-  //		int nuTotal=0;
-  		while(holder2!=nullptr){
-    		  int nuTotal=0;
-          for(unsigned int u=0; u<mylist.size(); u++){
-     			  //int nuTotal=0;
-            for(int z=0; z<10; z++){
-        			//holder2->digitCounts[z];
-              //int nuTotal=0;
-               if(mylist[u]==z){
-                     //nuTotal+=holder2->digitCounts[z];  
-        	        nuTotal+=holder2->digitCounts[z];
-                  
-      //        cout<<"number of instances of "<< mylist[u]<<" for actual value "<< holder2->actualValue<<" is "<< holder2->digitCounts[z]<<endl;
-        //    cout<<"nuTotal is "<<nuTotal<<endl;
-            }
-          
-       
-    if(nuTotal>total){
-      total=nuTotal;
-    //  cout<<"total for"<< holder2->actualValue<<" is "<<total<<endl;
-      }}}
-    holder2=holder2->next;
-  }
-  std::list<string> digiStatNum;
-  //I can completely see how inefficient this is
-  LinkedNode* holder3=head;
-  
-  while(holder3 != nullptr){
-      int nunuTotal=0;
-      for(int u=0; u<mylist.size(); u++){
-        for(int z=0; z<10; z++){
-         if(mylist[u]==z){
-            nunuTotal+=holder3->digitCounts[z];
-          }
-        }
-      }
-      if(nunuTotal==total){
-       
-        digiStatNum.push_back(holder3->value);
-      }
-    holder3=holder3->next;
-  }
-  digiStatNum.sort();
-  for(std::list<string>::iterator z=digiStatNum.begin(); z!=digiStatNum.end(); z++){
-      cout<<' '<<*z<<endl;
-  } 
+		//Then here we can call your function or algorithm.
+
+		vector<int> inSet;
+		for(int i = 0; i < input.length(); i++) {
+			if((int)input[i] >= 48 && (int)input[i] <= 57)
+				inSet.push_back((int)input[i] - 48);
+		}
+		
+
+		vector<string> out;
+		int max = 0;		
+		LinkedNode* temp = head;
+		while(temp != nullptr) {
+			int count = 0;
+
+			for(int i : inSet)
+				count += temp->digitCounts[i];
+			if(count > max) {
+				out.clear();
+				out.push_back(temp->value);
+				max = count;
+			} else if(count == max)
+				out.push_back(temp->value);
+			temp = temp->next;
+		}		
+		
+		for(string v : out)
+			cout << v << endl;
 
 	} while(true);
 }
-
