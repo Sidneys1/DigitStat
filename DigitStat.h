@@ -6,4 +6,4 @@ typedef struct LinkedNode {
 	int digitCounts[10];
 } LinkedNode;
 
-void menu();
+void menu(LinkedNode* head);

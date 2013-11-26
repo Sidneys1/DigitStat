@@ -8,7 +8,8 @@
 #include <sstream>
 #include <algorithm>
 #include "DigitStat.h"
-
+#include <list>
+#include <locale>
 #define ERROR_INVALID_ARGS	1
 #define ERROR_INVALID_FILE	2
 #define ERROR_BAD_FORMAT	3
@@ -127,12 +128,12 @@ int main(int argc, char* argv[]) {
 	for(int j = 0; j < 9; j++)
 		outFile << firstDigCount[j] << ", ";
 	outFile << firstDigCount[9] << "\n";
-
+  
 	outFile.close();
 	/*End of file output*/
 
 	//Calling the menu function
-	menu();
+	menu(head);
 
 	//Cleanup
 	LinkedNode* node = head;
@@ -147,7 +148,7 @@ int main(int argc, char* argv[]) {
 	}
 }
 
-void menu() {
+void menu(LinkedNode* head) {
 	cout << "Entering menu, type 'q' to quit.\n" << endl;
 	string input;
 
@@ -162,6 +163,72 @@ void menu() {
 
 		//Then here we can call your function or algorithm. 
 		//I don't know if we need to check the input, we probably should.
+  		cout<<head->value<<endl;
+      int total=0;
+  		LinkedNode* holder=head;
+  		std::vector<int> mylist;
+    //  int t;
+    //  istringstream three(input);
+  //		int fiVal;
+      
+	//	if (!(three >> fiVal))
+		//	return ERROR_BAD_FORMAT;
+    int t=0;
+      while(input[t]){
+      if (isdigit(input[t])){
+    			for(int j=0; j<input.length(); j++){
+      				mylist.push_back((int) input[t]);
+    		      cout<<input[t];
+          }
+  		}
+  		else{
+    		cout<<"not a number";
+  		}
+    t++;
+   }
+    
+  		LinkedNode* holder2=head;
+  		int nuTotal;
+  		while(holder2!=nullptr){
+    		for(unsigned int u=0; u<mylist.size(); u++){
+     			for(int z=0; z<9; z++){
+        			//holder2->digitCounts[z];
+       				cout<<mylist[u]<<endl; 
+               if(mylist[u]==z){
+                  //nuTotal+=holder2->digitCounts[z];  
+        	        nuTotal+=holder2->digitCounts[z];
+                  //cout<<holder2->digitCounts[z]<<endl;
+            }
+     }     
+       }
+    if(nuTotal>total){
+      total=nuTotal;
+    }
+    holder2=holder2->next;
+  }
+  std::list<string> digiStatNum;
+  //I can completely see how inefficient this is
+  LinkedNode* holder3=head;
+  
+  while(holder3 != nullptr){
+      int nunuTotal=0;
+      for(int u=0; u<mylist.size(); u++){
+        for(int z=0; z<9; z++){
+         if(mylist[u]==z){
+            nunuTotal+=holder3->digitCounts[z];
+          }
+        }
+      }
+      if(nunuTotal==total){
+       
+        digiStatNum.push_back(holder3->value);
+      }
+    holder3=holder3->next;
+  }
+  digiStatNum.sort();
+  for(std::list<string>::iterator z=digiStatNum.begin(); z!=digiStatNum.end(); z++){
+      cout<<' '<<*z<<endl;
+  } 
 
 	} while(true);
 }
